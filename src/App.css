@@ -1,38 +1,137 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+}
+
 .App {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.wheel-container {
+  width: 600px;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+  border-radius: 50%;
+  cursor: grab;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.wheel {
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 50%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.segment {
+  flex-basis: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  height: 50%;
+  position: relative;
+}
+
+.segment:nth-child(odd) {
+  background-color: #ffe88b;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.segment:nth-child(even) {
+  background-color: #83cdff;
+  clip-path: polygon(0 0, 100% 0%, 50% 100%);
+}
+
+.marker {
+  position: absolute;
+  top: -2%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 40px solid rgb(0, 0, 0);
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-left: 0%;
+  gap: 1rem;
 }
 
-.App-link {
-  color: #61dafb;
+h1 {
+  margin-bottom: 20%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+form {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  animation: slideIn 0.5s ease-in-out;
+  margin-right: 5%;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(100%);
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    transform: translateX(0);
   }
+}
+
+form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+form input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+form button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+  background-color: #3498db;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+form button:hover {
+  background-color: #2980b9;
+}
+
+.wheel-container {
+  margin-right: 50px;
+  position: relative;
 }
