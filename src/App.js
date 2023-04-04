@@ -9,7 +9,6 @@ const App = () => {
   const [angle, setAngle] = useState(0);
   const [userValues, setUserValues] = useState([]);
   const [{ x }, api] = useSpring(() => ({ x: 0 }));
-  const [velocity, setVelocity] = useState(0);
 
   const wheelSize = 2200;
   const segments = userValues.length > 0 ? userValues.length : 3;
@@ -22,35 +21,24 @@ const App = () => {
       .split(',')
       .map((value) => value.trim());
     setUserValues(inputValues);
-    setAngle(0);
-    setVelocity(0);
   };
 
   
-  const bind = useDrag(({ down, movement: [mx, my], velocity }) => {
+  const bind = useDrag(({ down }) => {
     if (!down) {
-      if (velocity > 0.2) {
-        setSpinning(true);
-        const randomStop = Math.floor(Math.random() * 360);
-        const totalRotation = angle + velocity * 1000 + randomStop;
-        api.start({
-          x: totalRotation,
-          from: { x: angle },
-          config: (spring) => {
-            return {
-              ...spring,
-              velocity: velocity * 40, // adjust the multiplier to control the smoothness of the speed increase
-            };
-          },
-          onRest: () => setSpinning(false),
-        });
-        setAngle(totalRotation);
-      }
+      setSpinning(true);
+      const randomSpins = Math.floor(Math.random() * 5 + 1) * 360;
+      const randomStop = Math.floor(Math.random() * 360);
+      const totalRotation = angle + randomSpins + randomStop;
+      api.start({
+        x: totalRotation,
+        from: { x: angle },
+        config: { mass: 1, tension: 50, friction: 60 },
+        onRest: () => setSpinning(false),
+      });
+      setAngle(totalRotation);
     }
   });
-  
-  
-  
   const colors = ['#f1c40f', '#3498db', '#e74c3c', '#9b59b6', '#1abc9c', '#34495e', '#16a085', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50', '#f39c12'];
 
   const createSegments = () => {
